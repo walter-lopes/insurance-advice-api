@@ -6,11 +6,11 @@ class User:
     def __init__(self, age, dependents, ownership_status, income, marital_status, risk_questions, vehicle_year):
         self.age = age
         self.dependents = dependents
-        self.house = House(ownership_status)
+        self.house = None if ownership_status is None else House(ownership_status)
         self.income = income
         self.marital_status = marital_status
         self.risk_questions = risk_questions
-        self.vehicle = Vehicle(vehicle_year)
+        self.vehicle = None if vehicle_year is None else Vehicle(vehicle_year)
 
     def is_married(self):
         return self.marital_status == 'married'
