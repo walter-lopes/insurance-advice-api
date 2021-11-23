@@ -1,2 +1,2 @@
 flask
-pip install flask-expects-json
+flask-expects-json
