@@ -11,7 +11,7 @@ schema = {
     "age": { "type": "number"},
     "dependents": { "type": "number" },
     "income": { "type": "number" },
-    "house": { "type": "object" , "properties": { "ownership_status": {"type": "string"} }},
+    "house": { "type": "object" , "properties": { "ownership_status": {"type": "string", "enum": ["owned", "mortgaged"]} }},
     "marital_status": { "type": "string", "enum": ["married", "single"]},
     "risk_questions": { "type": "array", "minLength": 3, "maxLenght": 3 },
     "vehicle": {"type": "object", "properties": {"year": {"type": "number"}}},
