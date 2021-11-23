@@ -23,10 +23,73 @@ class Insurance_Test(unittest.TestCase):
         self.assertEqual(score['auto'], Score.ineligible.name)
 
     def test_should_apply_for_user_variable(self):
-        user = User(29, 2, 'mortgaged', 200001, 'married', [0, 1, 1], 2020)
+        user = User(29, 1, 'mortgaged', 199999, 'married', [0, 1, 1], 2020)
         insurance = Insurance(user)
         score = insurance.get_risk_score()
-        self.assertEqual(score['disability'], Score.ineligible.name)
-        self.assertEqual(score['home'], Score.ineligible.name)
+        self.assertEqual(score['disability'], Score.economic.name)
+        self.assertEqual(score['home'], Score.economic.name)
+        self.assertEqual(score['auto'], Score.economic.name)
+        self.assertEqual(score['life'], Score.economic.name)
+
+    def test_should_apply_for_user_variable(self):
+        user = User(29, 1, 'mortgaged', 199999, 'married', [0, 1, 1], 2020)
+        insurance = Insurance(user)
+        score = insurance.get_risk_score()
+        self.assertEqual(score['disability'], Score.economic.name)
+        self.assertEqual(score['home'], Score.economic.name)
+        self.assertEqual(score['auto'], Score.economic.name)
+        self.assertEqual(score['life'], Score.economic.name)
+
+    def test_should_apply_for_user_variable_2(self):
+        user = User(30, 1, 'mortgaged', 199999, 'married', [0, 1, 1], 2020)
+        insurance = Insurance(user)
+        score = insurance.get_risk_score()
+        self.assertEqual(score['disability'], Score.economic.name)
+        self.assertEqual(score['home'], Score.economic.name)
+        self.assertEqual(score['auto'], Score.economic.name)
+        self.assertEqual(score['life'], Score.regular.name)
+
+    def test_should_apply_for_user_variable_2(self):
+        user = User(35, 1, 'mortgaged', 199999, 'married', [0, 1, 1], 2020)
+        insurance = Insurance(user)
+        score = insurance.get_risk_score()
+        self.assertEqual(score['disability'], Score.economic.name)
+        self.assertEqual(score['home'], Score.economic.name)
+        self.assertEqual(score['auto'], Score.economic.name)
+        self.assertEqual(score['life'], Score.regular.name)
+
+    def test_should_apply_for_user_variable_2(self):
+        user = User(40, 1, 'mortgaged', 199999, 'married', [0, 1, 1], 2020)
+        insurance = Insurance(user)
+        score = insurance.get_risk_score()
+        self.assertEqual(score['disability'], Score.economic.name)
+        self.assertEqual(score['home'], Score.economic.name)
+        self.assertEqual(score['auto'], Score.economic.name)
+        self.assertEqual(score['life'], Score.regular.name)
+
+    def test_should_apply_for_user_variable_3(self):
+        user = User(59, 1, 'mortgaged', 199999, 'married', [0, 1, 1], 2020)
+        insurance = Insurance(user)
+        score = insurance.get_risk_score()
+        self.assertEqual(score['disability'], Score.regular.name)
+        self.assertEqual(score['home'], Score.regular.name)
         self.assertEqual(score['auto'], Score.regular.name)
-        self.assertEqual(score['life'], Score.ineligible.name)
+        self.assertEqual(score['life'], Score.regular.name)
+
+    def test_should_apply_for_user_variable_4(self):
+        user = User(59, 1, 'owned', 2000001, 'married', [0, 1, 1], 1999)
+        insurance = Insurance(user)
+        score = insurance.get_risk_score()
+        self.assertEqual(score['disability'], Score.economic.name)
+        self.assertEqual(score['home'], Score.economic.name)
+        self.assertEqual(score['auto'], Score.economic.name)
+        self.assertEqual(score['life'], Score.regular.name)
+
+    def test_should_apply_for_user_variable_5(self):
+        user = User(59, 1, 'owned', 199999, 'single', [0, 1, 1], 1999)
+        insurance = Insurance(user)
+        score = insurance.get_risk_score()
+        self.assertEqual(score['disability'], Score.regular.name)
+        self.assertEqual(score['home'], Score.economic.name)
+        self.assertEqual(score['auto'], Score.economic.name)
+        self.assertEqual(score['life'], Score.regular.name)

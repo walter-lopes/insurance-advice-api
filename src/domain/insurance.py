@@ -1,9 +1,9 @@
 from src.domain.score import Score
 
 def __get_score__(number):
-    if number < 0:
+    if number <= 0:
         return Score.economic.name
-    elif 1 < number < 2:
+    elif number == 1 or number == 2:
         return Score.regular.name
     else:
         return Score.responsible.name
@@ -27,11 +27,10 @@ class Insurance:
         self.__apply_over_than_sixty(user)
         self.__apply_under_third_years(user)
         self.__apply_between_forty_and_third(user)
-        self.__apply_between_forty_and_third(user)
         self.__apply_income_above_than_200(user)
         self.__apply_house_is_mortgaged__(user)
         self.__apply_is_married__(user)
-        self.__apply_has_dependencies__(user)
+        self.__apply_has_dependents__(user)
         self.__apply_vehicle_five_last_years__(user)
 
     def __apply__no_income_vehicle_house__(self, user):
@@ -47,43 +46,43 @@ class Insurance:
 
     def __apply_under_third_years(self, user):
         if user.age < 30:
-            self.disability_points = -2
-            self.auto_points = -2
-            self.home_insurance_points = -2
-            self.life_points = -2
+            self.disability_points -= 2
+            self.auto_points -= 2
+            self.home_insurance_points -= 2
+            self.life_points -= 2
 
     def __apply_between_forty_and_third(self, user):
-        if 30 < user.age < 40:
-            self.disability_points = -1
-            self.auto_points = -1
-            self.home_insurance_points = -1
-            self.life_points = -1
+        if 30 <= user.age <= 40:
+            self.disability_points -= 1
+            self.auto_points -= 1
+            self.home_insurance_points -= 1
+            self.life_points -= 1
 
     def __apply_income_above_than_200(self, user):
         if user.income > 200000:
-            self.disability_points = -1
-            self.auto_points = -1
-            self.home_insurance_points = -1
-            self.life_points = -1
+            self.disability_points -= 1
+            self.auto_points -= 1
+            self.home_insurance_points -= 1
+            self.life_points -= 1
 
     def __apply_house_is_mortgaged__(self, user):
         if user.house is not None and user.house.is_mortgaged():
-            self.disability_points = 1
-            self.home_insurance_points = 1
+            self.disability_points += 1
+            self.home_insurance_points += 1
 
-    def __apply_has_dependencies__(self, user):
+    def __apply_has_dependents__(self, user):
         if user.dependents > 0:
-            self.disability_points = 1
-            self.life_points = 1
+            self.disability_points += 1
+            self.life_points += 1
 
     def __apply_is_married__(self, user):
         if user.is_married():
-            self.disability_points = -1
-            self.life_points = 1
+            self.disability_points -= 1
+            self.life_points += 1
 
     def __apply_vehicle_five_last_years__(self, user):
         if user.vehicle is not None and user.vehicle.is_less_than(5):
-            self.auto_points = 1
+            self.auto_points += 1
 
     def get_risk_score(self):
         return {
